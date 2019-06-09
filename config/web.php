@@ -5,6 +5,7 @@ $db = require __DIR__ . '/db.php';
 
 $config = [
     'id' => 'basic',
+    'language'=> 'en_EN',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'aliases' => [
@@ -16,6 +17,9 @@ $config = [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'aELqmXIh-mrnDYD9f9w-8XOVuniCyEO6',
         ],
+
+        'activity' => ['class' => \app\components\ActivityComponent::class, 'modelClass' => 'app\models\Activity'],
+
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
@@ -43,14 +47,12 @@ $config = [
             ],
         ],
         'db' => $db,
-        /*
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
             ],
         ],
-        */
     ],
     'params' => $params,
 ];
