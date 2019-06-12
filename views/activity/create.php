@@ -3,7 +3,7 @@
  * @var $model \app\models\Activity
  */
 ?>
-<h2>Добавление события</h2>
+<h2>Create/edit activity</h2>
 
 <div class="row">
     <div class="col-md-6">
@@ -13,7 +13,7 @@
         <?=$form->field($model, 'title');?>
         <?=$form->field($model,'dateStart');?>
         <?=$form->field($model, 'description')->textarea(['data-id' => 'spf']);?>
-        <?=$form->field($model, 'isBlocked')->checkbox();?>
+        <?=$form->field($model, 'isBlocking')->checkbox();?>
         <?=$form->field($model,'repeatType')->dropDownList($model::REPEAT_TYPE)?>
 
         <?=$form->field($model,'useNotification')->checkbox();?>
@@ -23,7 +23,7 @@
 
         <?=$form->field($model,'img')->fileInput()?>
         <div class="form-group">
-            <button type="submit">Отправить</button>
+            <button type="submit">Submit</button>
         </div>
         <?php \yii\bootstrap\ActiveForm::end();?>
     </div>
