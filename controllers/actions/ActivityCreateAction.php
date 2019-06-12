@@ -1,39 +1,34 @@
 <?php
 
-
 namespace app\controllers\actions;
 
-
-use app\components\ActivityComponent;
 use app\models\Activity;
-use Yii;
 use yii\base\Action;
+use yii\web\Response;
+use yii\widgets\ActiveForm;
 
 class ActivityCreateAction extends Action
 {
-    public function run() {
+    public function run(){
 
         $model = new Activity();
 
-        /** @var ActivityComponent $comp */
-        $comp = Yii::createObject([
-            'class' => \app\components\ActivityComponent::class,
-            'modelClass' => 'app\models\Activity'
-        ]);
 
-        $model = $comp->getModel();
+        if (\Yii::$app->request->isPost){
 
-        if (Yii::$app->request->isPost) {
+            $model->load(\Yii::$app->request->post());
 
-            $model->load(Yii::$app->request->post());
+            if(\Yii::$app->request->isAjax){
+                \Yii::$app->response->format=Response::FORMAT_JSON;
+                return ActiveForm::validate($model);
+            }
 
-            if (Yii::$app->activity->createActivity($model)) {
-
-            };
+            if(\Yii::$app->activity->createActivity($model)){
+                return $this->controller->render('view',['model'=>$model]);
+            }
         }
 
-        return $this->controller->render('create', ['model' => $model]);
+        return  $this -> controller -> render('create', ['model'=>$model]);
     }
-
 }
 
