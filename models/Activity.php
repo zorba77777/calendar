@@ -10,16 +10,15 @@ class Activity extends Model
     public  $description;
     public  $dateStart;
     public  $dateFinish;
-    public  $isBlocked;
-    public  $isRepeat;
-    public  $url;
+    public  $isBlocking;
+    public  $isRepeating;
     public  $email;
     public  $emailRepeat;
     public  $useNotification;
     public $repeatType;
     public $img;
 
-    public const REPEAT_TYPE=['1d'=>'Каждый день','1w'=>'Каждую неделю'];
+    public const REPEAT_TYPE=['1d'=>'Every day','1w'=>'Every week'];
 
     public function beforeValidate()
     {
@@ -32,6 +31,7 @@ class Activity extends Model
     }
 
     public function rules(){
+
         return [
             ['title', 'string', 'min' => 5,'max' => '255'],
             ['title','trim'],
@@ -40,7 +40,7 @@ class Activity extends Model
             ['title', StopPhraseValidation::class],
             ['dateStart','date','format' => 'php:Y-m-d'],
             ['description', 'string','max' => 2000],
-            [['isBlocked','useNotification'], 'boolean'],
+            [['isBlocking','useNotification'], 'boolean'],
             ['email','email'],
 
             ['email','required','when' => function($model){
@@ -53,17 +53,17 @@ class Activity extends Model
 
     public function stopPhraseTitle($attr){
 
-        if(in_array($this->title,['шаурма','бордюр'])){
-            $this->addError($attr,'Недопустимое название события');
+        if(in_array($this->title,['shawarma','curb'])){
+            $this->addError($attr,'This name of activity is not permitted');
         }
     }
 
     public function attributeLabels(){
 
         return [
-            'title' => 'Заголовок описания',
-            'description' => 'Описание',
-            'isBlocked' => 'Блокирующее'
+            'title' => 'Activity title',
+            'description' => 'Activity description',
+            'isBlocking' => 'Blocking activity'
         ];
     }
 
