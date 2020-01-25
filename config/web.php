@@ -20,15 +20,21 @@ $config = [
             'cookieValidationKey' => 'aELqmXIh-mrnDYD9f9w-8XOVuniCyEO6',
         ],
 
+        'authManager' => [
+            'class'=>'yii\rbac\DbManager'
+        ],
+
         'activity' => ['class' => \app\components\ActivityComponent::class, 'modelClass' => 'app\models\Activity'],
 
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
+        'rbac'=>['class'=>\app\components\RbacComponent::class],
         'user' => [
-            'identityClass' => 'app\models\User',
+            'identityClass' => 'app\models\Users',
             'enableAutoLogin' => true,
         ],
+        'auth'=>['class'=>\app\components\AuthComponent::class],
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],

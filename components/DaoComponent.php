@@ -32,7 +32,7 @@ class DaoComponent extends Component
     }
 
     public function getFirstBlocking(){
-        $query=new Query();
+        $query = new Query();
         return $query->select(['id','title'])
             ->from('activity')
             ->andWhere(['isBlocking' => 1])

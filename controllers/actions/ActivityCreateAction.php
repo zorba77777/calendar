@@ -4,12 +4,21 @@ namespace app\controllers\actions;
 
 use app\models\Activity;
 use yii\base\Action;
+use yii\web\HttpException;
 use yii\web\Response;
 use yii\widgets\ActiveForm;
 
 class ActivityCreateAction extends Action
 {
+    /**
+     * @return array|string
+     * @throws HttpException
+     */
     public function run(){
+
+        if(!\Yii::$app->rbac->canCreateActivity()){
+            throw new HttpException(403,'Not allowed');
+        }
 
         $model = new Activity();
 
@@ -24,7 +33,7 @@ class ActivityCreateAction extends Action
             }
 
             if(\Yii::$app->activity->createActivity($model)){
-                return $this->controller->render('activity',['model'=>$model]);
+                return $this->controller->render('activity',['model' => $model]);
             }
         }
 
@@ -32,8 +41,8 @@ class ActivityCreateAction extends Action
 
             $model->title = \Yii::$app->request->get('title');
             $model->description = \Yii::$app->request->get('description');
-            $model->dateStart = \Yii::$app->request->get('dateStart');
-            $model->dateFinish = \Yii::$app->request->get('dateFinish');
+            $model->startDate = \Yii::$app->request->get('startDate');
+            $model->endDate = \Yii::$app->request->get('endDate');
             $model->email = \Yii::$app->request->get('email');
             $model->repeatType = \Yii::$app->request->get('repeatType');
             $model->isRepeating = \Yii::$app->request->get('isRepeating');
